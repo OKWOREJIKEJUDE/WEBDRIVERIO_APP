@@ -9,10 +9,12 @@ describe("Test Suites", () => {
     }
     async function performLogin(usernameValue, passwordValue) {
         await $('~Later').click()
-        const username = await $('//android.widget.EditText[@index=2]').click()
-        await username.addValue(usernameValue)
-        const password = await $('//android.widget.EditText[@index=3]').click()
-        await password.addValue(passwordValue);
+        const username = await $('//android.widget.EditText[@index=2]')
+        await username.click()
+        await username.setValue(usernameValue)
+        const password = await $('//android.widget.EditText[@index=3]')
+        await password.click()
+        await password.setValue(passwordValue);
         await driver.hideKeyboard();
         await $('//android.view.View[@index=5]').click()
         await $('~Later').click()
@@ -29,9 +31,14 @@ describe("Test Suites", () => {
         await cardHome.click()
         await browser.pause(5000)
         //await $('android=new UiScrollable(new UI Selector().scrollable(true)).scrollTextIntoView()')
-
-        const card = await $('android.widget.ImageView')
-        await card.click()
+        const card1 = await $('//android.widget.ImageView[@index=1]')
+        const card2 = await $('//android.widget.ImageView[@index=2]')
+        card1.touchAction([
+            'press', {action: 'moveTo', element: card2}, 
+            'release'
+        ]),
+        await browser.pause(5000)
+        await card2.click()
         const fundCard = await $('~Fund card')
         fundCard.click()
         const enterAmount = await $('//android.widget.EditText')
@@ -162,10 +169,10 @@ describe("Test Suites", () => {
     }
 
 
-    it("Card Funding", async () => {
-        await initializeApp()
+ 
+    it("View Card Details", async () => {
         await performLogin('momma', 'Required@123')
-        await fundCard()
+        await viewCardDetails()
         await performLogout()
     })
     it("Card Withdrawal", async () => {
@@ -173,11 +180,13 @@ describe("Test Suites", () => {
         await withdrawCard()
         await performLogout()
     })
-    it("View Card Details", async () => {
-        await performLogin('momma', 'Required@123')
-        await viewCardDetails()
+    it("Card Funding", async () => {
+        await initializeApp()
+        await performLogin('onowu', 'Ejike123@')
+        await fundCard()
         await performLogout()
     })
+  
     it("Change Card PIN", async () => {
         await performLogin('momma', 'Required@123')
         await changeCardPIN()

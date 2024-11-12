@@ -39,8 +39,6 @@ class PageObjects {
     get nextButton(){
         return $('~Next')
     }
-    
-    
     //This method starts the App
     // async initializeApp() {
     //     await browser.pause(3000);
@@ -104,8 +102,7 @@ class PageObjects {
             console.log("Test Failed for negative scenario")
         }
     }
-
-    //Method to Logout from the dashboard
+    //Send money flow
     async sendMoney(gigtag, narration, amount) {
         await this.sendMoneyButton.click()
         await browser.pause(1000)
@@ -113,13 +110,16 @@ class PageObjects {
         await browser.pause(1000)
         await this.userGigtag.click()
         await this.userGigtag.setValue(gigtag)
-        await browser.pause(1000)
+        await browser.pause(2000)
+        await browser.keys('Tab')
         await this.userNarration.click()
         await this.userNarration.setValue(narration)
-        await browser.pause(1000)
+        await browser.pause(2000)
+        await browser.keys('Tab')
         await this.userAmount.click()
         await this.userAmount.setValue(amount)
-        await browser.pause(1000)
+        await browser.pause(2000)
+        await browser.keys('Tab')
         await this.nextButton.click()
         await browser.pause(1000)
     }
